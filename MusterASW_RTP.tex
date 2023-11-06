@@ -1,8 +1,10 @@
+% LTeX: enabled=false
 \documentclass[12pt, oneside, a4paper]{scrreprt}
-\usepackage[manualmark,headsepline,footsepline]{scrlayer-scrpage}
+\usepackage[manualmark, headsepline, footsepline]{scrlayer-scrpage}
 
-\usepackage[german]{babel}
+\usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{csquotes}
 \usepackage{graphicx} %Grafik aktivieren
 \usepackage{float}
 \usepackage[final]{pdfpages}
@@ -25,7 +27,7 @@
 
 %% used for pgfplots, tikzpicture
 \usepackage{pgfplots}
-\pgfplotsset{compat=newest}
+\pgfplotsset{compat = newest}
 
 %% the following commands are needed for some matlab2tikz features
 \usetikzlibrary{plotmarks}
@@ -46,19 +48,19 @@
 \addtokomafont{chapter}{\color{chapter}}
 \makeatletter% siehe De-TeX-FAQ
 \renewcommand*{\chapterformat}{%
-  \begingroup% damit \unitlength-Änderung lokal bleibt 
-  \setlength{\unitlength}{1mm}% 
-  \begin{picture}(20,20)(0,5)% 
-  \setlength{\fboxsep}{0pt}% 
-  \put(20,20){\line(1,0){\dimexpr 
-  \textwidth-20\unitlength\relax\@gobble}}% 
-  \put(0,0){\makebox(15,20)[r]{% 
-  \fontsize{18\unitlength}{28\unitlength}\selectfont\thechapter 
-  \kern-.04em% Ziffer in der Zeichenzelle nach rechts schieben 
-  }}% 
-  \end{picture} % <-- Leerzeichen ist hier beabsichtigt! 
-  \newline
-  \endgroup
+   \begingroup% damit \unitlength-Änderung lokal bleibt 
+   \setlength{\unitlength}{1mm}% 
+   \begin{picture}(20,20)(0,5)% 
+   \setlength{\fboxsep}{0pt}% 
+   \put(20,20){\line(1,0){\dimexpr 
+   \textwidth-20\unitlength\relax\@gobble}}% 
+   \put(0,0){\makebox(15,20)[r]{% 
+   \fontsize{18\unitlength}{28\unitlength}\selectfont\thechapter 
+   \kern-.04em% Ziffer in der Zeichenzelle nach rechts schieben 
+   }}% 
+   \end{picture} % <-- Leerzeichen ist hier beabsichtigt! 
+   \newline
+   \endgroup
 }
 
 \setlength\parindent{0pt}
@@ -70,63 +72,38 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% LTeX: enabled=true
+% LTex: language=ngerman
 \begin{document}
 
- \begin{titlepage}
-
-	\begin{tabular}{l r} 
- 
-    \includegraphics[width=0.4\textwidth]{Bilder/oth-regensburg-logo}
-      &
-		
-   \end{tabular}
-
-
+\begin{titlepage}
+\begin{tabular}{l r} 
+\includegraphics[width=0.4\textwidth]{Bilder/oth-regensburg-logo} &
+\end{tabular}
    \begin{minipage} [c] [8.5cm] [b] {\textwidth}
       \Huge{
          \begin{center}
             \textbf{Praktikum Regelungstechnik (RTP)}\\[0.8cm]
-             \par
-              {\large Versuch 2 - Systemidentifikation }\\[1cm]
-              {\large Praktikumsauswertung} \\[1cm]
-          \end{center}
-           }
-      
-      
+            \par
+            {\large Versuch 2 - Systemidentifikation }\\[1cm]
+            {\large Praktikumsauswertung} \\[1cm]
+         \end{center}
+      }    
    \end{minipage}
-
- \vspace{0.1cm}
-
-
-
-
-
-
-
-
-
-
-
-
-	
+   \vspace{0.1cm}
    \begin{minipage} [c] [3.5cm] [b] {\textwidth}
-    \begin{center}
-    
-    
-       \vspace{0.3cm}
-       Gruppe 21\\
-       Jonas Seidl Matnr.: 3274404 \\
-       Daniel Diesing Matnr.: 3278345\\
-       \vspace{0.5cm}
-       \texttt{Dokument-Version: V1}\\
-	\end{center}
-  
+      \begin{center}
+         \vspace{0.3cm}
+         Gruppe 21\\
+         Jonas Seidl Matnr.: 3274404 \\
+         Daniel Diesing Matnr.: 3278345\\
+         \vspace{0.5cm}
+         \texttt{Dokument-Version: V1}\\
+	   \end{center}
    \end{minipage}
-
-
 \end{titlepage}
 
-
+\newpage
 \tableofcontents
 
 \defineavatar{Newton}{color=lime,subject={Tip},icon=Check,author={J. Seidl /D. Diesing}}
@@ -136,55 +113,60 @@
 
 \chapter{Praktikums Vorbereitung}
 \label{Praktikumsvorbereitung}
-\section{bekannte grundlegende Systemverhalten}
-Zur Bestimmung eines Systemverhaltens einer Regelstrecke sowie eines Reglers sind verschiedene Analysemethoden sowie mathematische Verfahren üblich.\\
-Die grundlegenden Systemverhalten werden wie folgt benannt und durch verschiedene Glieder wiedergegeben:
+
+\section{Bekannte grundlegende Systemverhalten}
+Zur Bestimmung eines Systemverhaltens einer Regelstrecke sowie eines Reglers sind 
+verschiedene Analysemethoden sowie mathematische Verfahren üblich.
+
+Die grundlegenden Systemverhalten werden wie folgt benannt und durch verschiedene 
+Glieder wiedergegeben:
 \begin{center}
-          -Integrierglied\\
-          \label{1}
-          -Differenzierglied\\
-          \label{2}
-          -Totzeitglied\\
-          \label{3}
-          -Proportionalglied\\ 
-          \label{4}
-          \end{center}
-Diese Glieder werden auch elementare Übertragungsglieder genannt, mit der Eigenschaft miteinander verknüpft zu werden. 
-\section{Benötigte Parameter zum beschreiben der Systeme}
+   \begin{itemize}
+   \item Integrierglied
+   \item Differenzierglied
+   \item Totzeitglied
+   \item Proportionalglied.
+   \end{itemize}
+\end{center}
+Diese Glieder werden auch elementare Übertragungsglieder genannt, mit der 
+Eigenschaft miteinander verknüpft zu werden. 
+
+
+\section{Benötigte Parameter zum Beschreiben der Systeme}
 \begin{itemize}
-
-\item Integrierglied
-\begin{equation}
-x_a(t)=K_I\int x_e(t)\dt
-\end{equation}
-$K_I=\text{Integralbeiwert}$
-\item Differenzierglied
-\begin{equation}
-x_a(t)=K_D\frac{\mathrm{d}}{\dt} x_e(t)
-\end{equation}
-$K_D=\text{Diffenrentialbeiwert}$
-\item Totzeitglied
-\begin{equation}
-x_a=K_tx_e(t-T_t)
-\end{equation}
-$K_t=\text{Totzeitbeiwert}$
-\item Proportionalglied
-\begin{equation}
-x_a(t)=K_P\cdot x_e(t)
-\end{equation}
-$K_P=\text{Proportionalbeiwert}$
-
+   \item Integrierglied
+   \begin{equation}
+      x_a(t)=K_I\int x_e(t)\dt
+   \end{equation}
+   $K_I=\text{Integralbeiwert}$
+   \item Differenzierglied
+   \begin{equation}
+      x_a(t)=K_D\frac{\mathrm{d}}{\dt} x_e(t)
+   \end{equation}
+   $K_D=\text{Diffenrentialbeiwert}$
+   \item Totzeitglied
+   \begin{equation}
+      x_a=K_tx_e(t-T_t)
+   \end{equation}
+   $K_t=\text{Totzeitbeiwert}$
+   \item Proportionalglied
+   \begin{equation}
+      x_a(t)=K_P\cdot x_e(t)
+   \end{equation}
+   $K_P=\text{Proportionalbeiwert}$
 \end{itemize}
+
+
 \section{Beschreibung zweier Verhalten der elementaren Übertragungsglieder}
 
 \chapter{Versuchsauswertung}
 \section{System 1}
-In der zur Verfügung stehenden Messreihe wird ein System beschrieben. Im kommenden wird dies zuerst mit MatLab ausgewertet und geplottet, im Anschluss mit Simulink rekonstruiert. 
+In der zur Verfügung stehenden Messreihe wird ein System beschrieben. Im 
+kommenden wird dies zuerst mit MatLab ausgewertet und geplottet, im Anschluss 
+mit Simulink rekonstruiert. 
+
+
 \subsection{Auswertung per MatLab}
-
-
-
-
 
 \begin{figure}[H]
 \centering
@@ -221,10 +203,9 @@ In der zur Verfügung stehenden Messreihe wird ein System beschrieben. Im kommen
 \caption{Vergleich eines realen und simulierten Systemverhalten}
 \end{figure}
 
-Diese Darstellung eaines Signals weist einige Eigenschaften. Einerseits ist zu sehen, dass in den ersten \SI{1.5}{\second} eine Totzeit zu sehen ist. Des Weiteren wird deutlich, dass anschließend die Funktion fällt. Zusätzlich ist zu erkennen, dass das Signal mit einem Rauschen versehen ist.
-Ein neuer Satz.
-
-Hallo von Johanens
-
+Diese Darstellung eines Signals weist einige Eigenschaften. Einerseits ist zu 
+sehen, dass in den ersten \SI{1.5}{\second} eine Totzeit zu sehen ist. Des 
+Weiteren wird deutlich, dass anschließend die Funktion fällt. Zusätzlich ist zu 
+erkennen, dass das Signal mit einem Rauschen versehen ist.
 
 \end{document}
